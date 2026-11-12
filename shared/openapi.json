@@ -1,0 +1,2615 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Human Input Performance Lab",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login",
+        "operationId": "login_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Password"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/studies/{study_id}": {
+      "get": {
+        "summary": "Public",
+        "operationId": "public_api_public_studies__study_id__get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions": {
+      "post": {
+        "summary": "Enroll",
+        "operationId": "enroll_api_sessions_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Enrollment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Sessions",
+        "operationId": "sessions_api_sessions_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManagedRun"
+                  },
+                  "title": "Response Sessions Api Sessions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/participant/{session_id}": {
+      "get": {
+        "summary": "Resume",
+        "operationId": "resume_api_participant__session_id__get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Details",
+        "operationId": "details_api_participant__session_id__patch",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Details"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipantView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Erase",
+        "operationId": "erase_api_participant__session_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/participant/{session_id}/trials/{sequence}": {
+      "put": {
+        "summary": "Record",
+        "operationId": "record_api_participant__session_id__trials__sequence__put",
+        "parameters": [
+          {
+            "name": "sequence",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Sequence"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Attempt"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Receipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/participant/{session_id}/complete": {
+      "post": {
+        "summary": "Complete",
+        "operationId": "complete_api_participant__session_id__complete_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Effort"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/participant/{session_id}/withdraw": {
+      "post": {
+        "summary": "Withdraw",
+        "operationId": "withdraw_api_participant__session_id__withdraw_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunSummary"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "operationId": "logout_api_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "summary": "Me",
+        "operationId": "me_api_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies": {
+      "get": {
+        "summary": "Studies",
+        "operationId": "studies_api_studies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/StudyView"
+                  },
+                  "type": "array",
+                  "title": "Response Studies Api Studies Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create",
+        "operationId": "create_api_studies_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Protocol"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies/{study_id}": {
+      "get": {
+        "summary": "Study",
+        "operationId": "study_api_studies__study_id__get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Revise",
+        "operationId": "revise_api_studies__study_id__patch",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/{session_id}": {
+      "patch": {
+        "summary": "Manage",
+        "operationId": "manage_api_sessions__session_id__patch",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Management"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagedRun"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Admin Erase",
+        "operationId": "admin_erase_api_sessions__session_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/{session_id}/audit": {
+      "get": {
+        "summary": "Review History",
+        "operationId": "review_history_api_sessions__session_id__audit_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies/{study_id}/export": {
+      "get": {
+        "summary": "Export",
+        "operationId": "export_api_studies__study_id__export_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "json",
+                "csv"
+              ],
+              "type": "string",
+              "default": "json",
+              "title": "Format"
+            }
+          },
+          {
+            "name": "include_events",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Events"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies/{study_id}/analysis": {
+      "get": {
+        "summary": "Analysis Result",
+        "operationId": "analysis_result_api_studies__study_id__analysis_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies/{study_id}/report.pdf": {
+      "get": {
+        "summary": "Pdf",
+        "operationId": "pdf_api_studies__study_id__report_pdf_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/studies/{study_id}/reports": {
+      "post": {
+        "summary": "Generate Report",
+        "operationId": "generate_report_api_studies__study_id__reports_post",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reports": {
+      "get": {
+        "summary": "Recent Reports",
+        "operationId": "recent_reports_api_reports_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dashboard": {
+      "get": {
+        "summary": "Dashboard",
+        "operationId": "dashboard_api_dashboard_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Attempt": {
+        "properties": {
+          "start_x": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "Start X"
+          },
+          "start_y": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "Start Y"
+          },
+          "start_center_x": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 20000.0,
+                "minimum": -20000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Center X"
+          },
+          "start_center_y": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 20000.0,
+                "minimum": -20000.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Center Y"
+          },
+          "start_width": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Width"
+          },
+          "target_x": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "Target X"
+          },
+          "target_y": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "Target Y"
+          },
+          "target_width": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Target Width"
+          },
+          "started_at_ms": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Started At Ms"
+          },
+          "ended_at_ms": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Ended At Ms"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "maxItems": 50000,
+            "minItems": 1,
+            "title": "Events"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "interrupted"
+            ],
+            "title": "Outcome"
+          },
+          "interruption_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interruption Reason"
+          },
+          "input_method": {
+            "type": "string",
+            "enum": [
+              "mouse",
+              "trackpad"
+            ],
+            "title": "Input Method"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "start_x",
+          "start_y",
+          "target_x",
+          "target_y",
+          "target_width",
+          "started_at_ms",
+          "ended_at_ms",
+          "events",
+          "outcome",
+          "input_method"
+        ],
+        "title": "Attempt"
+      },
+      "Details": {
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/Environment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "metadata"
+        ],
+        "title": "Details"
+      },
+      "Effort": {
+        "properties": {
+          "effort_mouse": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Effort Mouse"
+          },
+          "effort_trackpad": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Effort Trackpad"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "effort_mouse",
+          "effort_trackpad"
+        ],
+        "title": "Effort"
+      },
+      "EnrolledProtocol": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title",
+            "default": "Mouse and trackpad pointing study"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Question",
+            "default": "How does input method affect target acquisition time, accuracy, and effort?"
+          },
+          "hypotheses": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Hypotheses",
+            "default": "Movement time increases with index of difficulty. Mean first-attempt latency differs between input methods."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Description",
+            "default": "A within-participant comparison of mouse and trackpad pointing."
+          },
+          "independent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Independent Variables",
+            "default": "Confirmed input method, target width, and target distance"
+          },
+          "dependent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Dependent Variables",
+            "default": "First-attempt movement time, first-attempt accuracy, acquisition time, and effort"
+          },
+          "control_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Control Variables",
+            "default": "Same screen, seating, pointer settings, and browser throughout both blocks"
+          },
+          "inclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Inclusion Criteria",
+            "default": "Adults able to consent, with a desktop or laptop and access to both study devices"
+          },
+          "exclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Exclusion Criteria",
+            "default": "Document protocol deviations and interruptions. Keep raw trial records."
+          },
+          "sample_size": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Sample Size",
+            "default": 24
+          },
+          "recruitment_target": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Recruitment Target",
+            "default": 24
+          },
+          "sample_justification": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Sample Justification",
+            "default": "Feasibility pilot. Estimate participant-level variation before powering a confirmatory study."
+          },
+          "widths": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Widths"
+          },
+          "distances": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Distances"
+          },
+          "repetitions": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Repetitions",
+            "default": 1
+          },
+          "practice_trials": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Practice Trials",
+            "default": 2
+          },
+          "break_interval": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Break Interval",
+            "default": 9
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version",
+            "default": "1.0"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "completed"
+            ],
+            "title": "Status",
+            "default": "draft"
+          },
+          "randomization": {
+            "type": "string",
+            "const": "counterbalanced-blocks",
+            "title": "Randomization",
+            "default": "counterbalanced-blocks"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory",
+            "default": true
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "EnrolledProtocol"
+      },
+      "Enrollment": {
+        "properties": {
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version"
+          },
+          "consent": {
+            "type": "boolean",
+            "const": true,
+            "title": "Consent"
+          },
+          "enrollment_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enrollment Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "study_id",
+          "protocol_version",
+          "consent"
+        ],
+        "title": "Enrollment"
+      },
+      "EnrollmentView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Status"
+          },
+          "order": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "mouse",
+                "trackpad"
+              ]
+            },
+            "type": "array",
+            "title": "Order"
+          },
+          "next_sequence": {
+            "type": "integer",
+            "title": "Next Sequence"
+          },
+          "completed_trials": {
+            "type": "integer",
+            "title": "Completed Trials"
+          },
+          "trial_count": {
+            "type": "integer",
+            "title": "Trial Count"
+          },
+          "total_trials": {
+            "type": "integer",
+            "title": "Total Trials"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          },
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
+          },
+          "expires_at": {
+            "type": "integer",
+            "title": "Expires At"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "effort": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effort"
+          },
+          "break_interval": {
+            "type": "integer",
+            "title": "Break Interval"
+          },
+          "protocol": {
+            "$ref": "#/components/schemas/EnrolledProtocol"
+          },
+          "schedule": {
+            "items": {
+              "$ref": "#/components/schemas/Slot"
+            },
+            "type": "array",
+            "title": "Schedule"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "study_id",
+          "participant_id",
+          "protocol_version",
+          "status",
+          "order",
+          "next_sequence",
+          "completed_trials",
+          "trial_count",
+          "total_trials",
+          "started_at",
+          "consent_at",
+          "expires_at",
+          "metadata",
+          "effort",
+          "break_interval",
+          "protocol",
+          "schedule",
+          "record_trajectory",
+          "token"
+        ],
+        "title": "EnrollmentView"
+      },
+      "Environment": {
+        "properties": {
+          "device_category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Device Category"
+          },
+          "os": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Os"
+          },
+          "browser": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1024
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Browser"
+          },
+          "screen_width": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 40000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Screen Width"
+          },
+          "screen_height": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 40000.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Screen Height"
+          },
+          "pixel_ratio": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 32.0,
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pixel Ratio"
+          },
+          "familiarity": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Familiarity"
+          },
+          "dominant_hand": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 240,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dominant Hand"
+          },
+          "accessibility": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accessibility"
+          },
+          "confirmed_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "mouse",
+                  "trackpad"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Method"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Environment"
+      },
+      "Event": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "down",
+              "up",
+              "move"
+            ],
+            "title": "Type"
+          },
+          "x": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "X"
+          },
+          "y": {
+            "type": "number",
+            "maximum": 20000.0,
+            "minimum": -20000.0,
+            "title": "Y"
+          },
+          "t": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "T"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "type",
+          "x",
+          "y",
+          "t"
+        ],
+        "title": "Event"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ManagedRun": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Status"
+          },
+          "order": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "mouse",
+                "trackpad"
+              ]
+            },
+            "type": "array",
+            "title": "Order"
+          },
+          "next_sequence": {
+            "type": "integer",
+            "title": "Next Sequence"
+          },
+          "completed_trials": {
+            "type": "integer",
+            "title": "Completed Trials"
+          },
+          "trial_count": {
+            "type": "integer",
+            "title": "Trial Count"
+          },
+          "total_trials": {
+            "type": "integer",
+            "title": "Total Trials"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          },
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
+          },
+          "expires_at": {
+            "type": "integer",
+            "title": "Expires At"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "effort": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effort"
+          },
+          "break_interval": {
+            "type": "integer",
+            "title": "Break Interval"
+          },
+          "notes": {
+            "type": "string",
+            "title": "Notes"
+          },
+          "eligibility": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "eligible",
+              "excluded"
+            ],
+            "title": "Eligibility"
+          },
+          "verified_methods": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "mouse",
+                "trackpad"
+              ]
+            },
+            "type": "array",
+            "title": "Verified Methods"
+          },
+          "exclusion_reason": {
+            "type": "string",
+            "title": "Exclusion Reason",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "study_id",
+          "participant_id",
+          "protocol_version",
+          "status",
+          "order",
+          "next_sequence",
+          "completed_trials",
+          "trial_count",
+          "total_trials",
+          "started_at",
+          "consent_at",
+          "expires_at",
+          "metadata",
+          "effort",
+          "break_interval",
+          "notes",
+          "eligibility",
+          "verified_methods"
+        ],
+        "title": "ManagedRun"
+      },
+      "Management": {
+        "properties": {
+          "eligibility": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "eligible",
+                  "excluded"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Eligibility"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "exclusion_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exclusion Reason"
+          },
+          "verified_methods": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "mouse",
+                    "trackpad"
+                  ]
+                },
+                "type": "array",
+                "maxItems": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified Methods"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Management"
+      },
+      "ParticipantView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Status"
+          },
+          "order": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "mouse",
+                "trackpad"
+              ]
+            },
+            "type": "array",
+            "title": "Order"
+          },
+          "next_sequence": {
+            "type": "integer",
+            "title": "Next Sequence"
+          },
+          "completed_trials": {
+            "type": "integer",
+            "title": "Completed Trials"
+          },
+          "trial_count": {
+            "type": "integer",
+            "title": "Trial Count"
+          },
+          "total_trials": {
+            "type": "integer",
+            "title": "Total Trials"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          },
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
+          },
+          "expires_at": {
+            "type": "integer",
+            "title": "Expires At"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "effort": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effort"
+          },
+          "break_interval": {
+            "type": "integer",
+            "title": "Break Interval"
+          },
+          "protocol": {
+            "$ref": "#/components/schemas/EnrolledProtocol"
+          },
+          "schedule": {
+            "items": {
+              "$ref": "#/components/schemas/Slot"
+            },
+            "type": "array",
+            "title": "Schedule"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "study_id",
+          "participant_id",
+          "protocol_version",
+          "status",
+          "order",
+          "next_sequence",
+          "completed_trials",
+          "trial_count",
+          "total_trials",
+          "started_at",
+          "consent_at",
+          "expires_at",
+          "metadata",
+          "effort",
+          "break_interval",
+          "protocol",
+          "schedule",
+          "record_trajectory"
+        ],
+        "title": "ParticipantView"
+      },
+      "Password": {
+        "properties": {
+          "password": {
+            "type": "string",
+            "maxLength": 1024,
+            "title": "Password"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "password"
+        ],
+        "title": "Password"
+      },
+      "Protocol": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title",
+            "default": "Mouse and trackpad pointing study"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Question",
+            "default": "How does input method affect target acquisition time, accuracy, and effort?"
+          },
+          "hypotheses": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Hypotheses",
+            "default": "Movement time increases with index of difficulty. Mean first-attempt latency differs between input methods."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Description",
+            "default": "A within-participant comparison of mouse and trackpad pointing."
+          },
+          "independent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Independent Variables",
+            "default": "Confirmed input method, target width, and target distance"
+          },
+          "dependent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Dependent Variables",
+            "default": "First-attempt movement time, first-attempt accuracy, acquisition time, and effort"
+          },
+          "control_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Control Variables",
+            "default": "Same screen, seating, pointer settings, and browser throughout both blocks"
+          },
+          "inclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Inclusion Criteria",
+            "default": "Adults able to consent, with a desktop or laptop and access to both study devices"
+          },
+          "exclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Exclusion Criteria",
+            "default": "Document protocol deviations and interruptions. Keep raw trial records."
+          },
+          "sample_size": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Sample Size",
+            "default": 24
+          },
+          "recruitment_target": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Recruitment Target",
+            "default": 24
+          },
+          "sample_justification": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Sample Justification",
+            "default": "Feasibility pilot. Estimate participant-level variation before powering a confirmatory study."
+          },
+          "widths": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Widths"
+          },
+          "distances": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Distances"
+          },
+          "repetitions": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Repetitions",
+            "default": 1
+          },
+          "practice_trials": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Practice Trials",
+            "default": 2
+          },
+          "break_interval": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Break Interval",
+            "default": 9
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version",
+            "default": "1.0"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "completed"
+            ],
+            "title": "Status",
+            "default": "draft"
+          },
+          "randomization": {
+            "type": "string",
+            "const": "counterbalanced-blocks",
+            "title": "Randomization",
+            "default": "counterbalanced-blocks"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Protocol"
+      },
+      "Receipt": {
+        "properties": {
+          "next_sequence": {
+            "type": "integer",
+            "title": "Next Sequence"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "next_sequence",
+          "status"
+        ],
+        "title": "Receipt"
+      },
+      "RunSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "participant_id": {
+            "type": "string",
+            "title": "Participant Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "in_progress",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Status"
+          },
+          "order": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "mouse",
+                "trackpad"
+              ]
+            },
+            "type": "array",
+            "title": "Order"
+          },
+          "next_sequence": {
+            "type": "integer",
+            "title": "Next Sequence"
+          },
+          "completed_trials": {
+            "type": "integer",
+            "title": "Completed Trials"
+          },
+          "trial_count": {
+            "type": "integer",
+            "title": "Trial Count"
+          },
+          "total_trials": {
+            "type": "integer",
+            "title": "Total Trials"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          },
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
+          },
+          "expires_at": {
+            "type": "integer",
+            "title": "Expires At"
+          },
+          "metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata"
+          },
+          "effort": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Effort"
+          },
+          "break_interval": {
+            "type": "integer",
+            "title": "Break Interval"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "study_id",
+          "participant_id",
+          "protocol_version",
+          "status",
+          "order",
+          "next_sequence",
+          "completed_trials",
+          "trial_count",
+          "total_trials",
+          "started_at",
+          "consent_at",
+          "expires_at",
+          "metadata",
+          "effort",
+          "break_interval"
+        ],
+        "title": "RunSummary"
+      },
+      "Slot": {
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "title": "Sequence"
+          },
+          "input_method": {
+            "type": "string",
+            "enum": [
+              "mouse",
+              "trackpad"
+            ],
+            "title": "Input Method"
+          },
+          "width": {
+            "type": "integer",
+            "title": "Width"
+          },
+          "distance": {
+            "type": "integer",
+            "title": "Distance"
+          },
+          "practice": {
+            "type": "boolean",
+            "title": "Practice"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "sequence",
+          "input_method",
+          "width",
+          "distance",
+          "practice"
+        ],
+        "title": "Slot"
+      },
+      "StudyView": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title",
+            "default": "Mouse and trackpad pointing study"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Question",
+            "default": "How does input method affect target acquisition time, accuracy, and effort?"
+          },
+          "hypotheses": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Hypotheses",
+            "default": "Movement time increases with index of difficulty. Mean first-attempt latency differs between input methods."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Description",
+            "default": "A within-participant comparison of mouse and trackpad pointing."
+          },
+          "independent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Independent Variables",
+            "default": "Confirmed input method, target width, and target distance"
+          },
+          "dependent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Dependent Variables",
+            "default": "First-attempt movement time, first-attempt accuracy, acquisition time, and effort"
+          },
+          "control_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Control Variables",
+            "default": "Same screen, seating, pointer settings, and browser throughout both blocks"
+          },
+          "inclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Inclusion Criteria",
+            "default": "Adults able to consent, with a desktop or laptop and access to both study devices"
+          },
+          "exclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Exclusion Criteria",
+            "default": "Document protocol deviations and interruptions. Keep raw trial records."
+          },
+          "sample_size": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Sample Size",
+            "default": 24
+          },
+          "recruitment_target": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Recruitment Target",
+            "default": 24
+          },
+          "sample_justification": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Sample Justification",
+            "default": "Feasibility pilot. Estimate participant-level variation before powering a confirmatory study."
+          },
+          "widths": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Widths"
+          },
+          "distances": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Distances"
+          },
+          "repetitions": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Repetitions",
+            "default": 1
+          },
+          "practice_trials": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Practice Trials",
+            "default": 2
+          },
+          "break_interval": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Break Interval",
+            "default": 9
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version",
+            "default": "1.0"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "completed"
+            ],
+            "title": "Status",
+            "default": "draft"
+          },
+          "randomization": {
+            "type": "string",
+            "const": "counterbalanced-blocks",
+            "title": "Randomization",
+            "default": "counterbalanced-blocks"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory",
+            "default": true
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "created_at": {
+            "type": "integer",
+            "title": "Created At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "created_at"
+        ],
+        "title": "StudyView"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

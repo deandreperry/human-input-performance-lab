@@ -1,0 +1,355 @@
+.hip-participant {
+  --ink: #192623;
+  --secondary: #425c53;
+  --panel: #fff;
+  --ground: #f2f5f2;
+  --line: #cbd6ce;
+  --accent: #175f4e;
+  --wash: #e8f1eb;
+  min-height: 100dvh;
+  background: var(--ground);
+  color: var(--ink);
+  padding: 0 0 3rem;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+.hip-session-bar {
+  height: 64px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(18px, 5vw, 78px);
+  font-size: 0.82rem;
+  color: var(--secondary);
+}
+.hip-session-bar a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-weight: 750;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+.hip-session-card {
+  width: min(100% - 32px, 620px);
+  box-sizing: border-box;
+  margin: clamp(22px, 7vh, 75px) auto 0;
+  padding: clamp(24px, 4vw, 46px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--panel);
+  box-shadow: 0 12px 40px #14251e08;
+}
+.hip-session-card.hip-wide {
+  width: min(100% - 24px, 1180px);
+  margin-top: 18px;
+  padding: 20px clamp(14px, 3vw, 36px);
+}
+.hip-session-card h1,
+.hip-dialog h2 {
+  color: var(--ink);
+  font-weight: 630;
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin: 22px 0 14px;
+  font-size: clamp(1.85rem, 3.5vw, 2.8rem);
+}
+.hip-session-card h1:focus {
+  outline: 0;
+}
+.hip-session-card p,
+.hip-dialog p {
+  font-size: 0.96rem;
+  line-height: 1.65;
+  margin: 14px 0;
+  color: var(--secondary);
+}
+.hip-session-card .hip-lead {
+  font-size: 1.08rem;
+}
+.hip-session-label,
+.hip-session-footer,
+.hip-session-footer span,
+.hip-progress-line,
+.hip-exit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--secondary);
+  font-size: 0.82rem;
+}
+.hip-mini-icon,
+.hip-device {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--wash);
+  color: var(--accent);
+  border-radius: 8px;
+  padding: 8px;
+}
+.hip-device {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.hip-detail {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  align-items: flex-start;
+}
+.hip-detail svg {
+  width: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.hip-detail p {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+}
+.hip-participant button,
+.hip-dialog button {
+  cursor: pointer;
+  font: inherit;
+}
+.hip-participant .hip-primary,
+.hip-participant .hip-secondary,
+.hip-dialog .hip-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 14px 0;
+}
+.hip-participant .hip-secondary {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line);
+}
+.hip-dialog .hip-danger {
+  background: #942d30;
+}
+.hip-participant button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.hip-participant :is(button, a, input, select):focus-visible,
+.hip-dialog button:focus-visible {
+  outline: 3px solid #3788ca;
+  outline-offset: 3px;
+}
+.hip-facts {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) 1.5fr;
+  font-size: 0.9rem;
+  gap: 10px 16px;
+  margin: 24px 0;
+}
+.hip-facts dt {
+  color: var(--secondary);
+}
+.hip-facts dd {
+  margin: 0;
+  font-weight: 550;
+}
+.hip-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.hip-field select,
+.hip-field input {
+  box-sizing: border-box;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 400;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 9px 12px;
+}
+.hip-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--wash);
+  padding: 16px;
+  border-radius: 9px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 20px 0 4px;
+}
+.hip-check input {
+  margin: 3px 0 0;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+.hip-steps {
+  list-style: decimal;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+.hip-steps li {
+  padding-left: 5px;
+  margin: 10px 0;
+}
+.hip-progress-line,
+.hip-session-footer {
+  justify-content: space-between;
+}
+.hip-session-card progress {
+  display: block;
+  width: 100%;
+  height: 5px;
+  accent-color: var(--accent);
+  margin: 9px 0;
+}
+.hip-arena {
+  position: relative;
+  height: clamp(275px, 48vh, 620px);
+  overflow: hidden;
+  background: #eff3ef;
+  touch-action: none;
+  user-select: none;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px #c9d5cc;
+}
+.hip-target {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  background: #225a44;
+  border-radius: 50%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.hip-target.hip-start {
+  background: #fff;
+  color: #225a44;
+  border: 2px solid #225a44;
+  font-size: 24px;
+  line-height: 1;
+}
+.hip-arena .hip-arena-message {
+  max-width: 430px;
+  padding: 26px;
+  color: #3d5449;
+}
+.hip-session-card .hip-small {
+  font-size: 0.79rem;
+}
+.hip-session-card .hip-error,
+.hip-dialog [role="alert"] {
+  padding: 10px 13px;
+  border: 1px solid #d4a2a1;
+  border-radius: 7px;
+  color: #8c2727;
+  background: #fff1ef;
+}
+.hip-session-footer {
+  margin-top: 22px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.hip-session-footer button,
+.hip-exit {
+  background: none;
+  border: 0;
+  padding: 10px 0;
+  color: var(--secondary);
+  font-size: 0.84rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.hip-dialog {
+  --panel: #fff;
+  --ink: #192623;
+  --line: #cbd6ce;
+  --secondary: #425c53;
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  margin: auto;
+  width: min(92vw, 455px);
+  padding: 26px;
+  max-height: 90dvh;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--panel);
+  border-radius: 14px;
+}
+.hip-dialog h2 {
+  font-size: 1.55rem;
+  margin: 0;
+}
+.hip-dialog::backdrop {
+  background: #17262178;
+}
+.hip-dialog > div {
+  display: flex;
+  gap: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  .hip-participant {
+    --ink: #ebf3ed;
+    --secondary: #b6c8bd;
+    --panel: #182620;
+    --ground: #111b17;
+    --line: #3b5043;
+    --accent: #286f54;
+    --wash: #233a2d;
+  }
+  .hip-mini-icon,
+  .hip-device {
+    color: #a8e3bd;
+  }
+  .hip-session-card .hip-error {
+    color: #ffd3ce;
+    background: #4c2a29;
+  }
+}
+@media (max-width: 500px) {
+  .hip-facts {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .hip-facts dd {
+    margin-bottom: 8px;
+  }
+  .hip-session-bar {
+    padding: 0 16px;
+  }
+  .hip-session-card {
+    padding: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hip-participant * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+/lib/
 lib64/
 parts/
 sdist/
@@ -218,3 +218,25 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# HIP Lab workspace
+node_modules/
+.next/
+*.tsbuildinfo
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.env
+*.sqlite*
+*.db
+playwright-report/
+test-results/
+.DS_Store
+.next-test/
+.idea/
+.env.*
+!.env.example
+artifacts/
+private-exports/
