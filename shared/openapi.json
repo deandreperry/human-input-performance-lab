@@ -78,7 +78,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudyView"
+                  "$ref": "#/components/schemas/backend__hip__schema__StudyView"
                 }
               }
             }
@@ -105,7 +105,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Enrollment"
+                "$ref": "#/components/schemas/backend__hip__schema__Enrollment"
               }
             }
           }
@@ -540,6 +540,562 @@
         }
       }
     },
+    "/api/moderated/studies/{study_id}": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Overview",
+        "operationId": "overview_api_moderated_studies__study_id__get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/backend__hip__moderated__StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/studies/{study_id}/enroll": {
+      "post": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Enroll",
+        "operationId": "enroll_api_moderated_studies__study_id__enroll_post",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/backend__hip__moderated__Enrollment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Progress"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/participant/{sid}": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Progress",
+        "operationId": "progress_api_moderated_participant__sid__get",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Progress"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Advance",
+        "operationId": "advance_api_moderated_participant__sid__post",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Action"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Progress"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Erase",
+        "operationId": "erase_api_moderated_participant__sid__delete",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/studies": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Studies",
+        "operationId": "studies_api_moderated_studies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/backend__hip__moderated__StudyView"
+                  },
+                  "type": "array",
+                  "title": "Response Studies Api Moderated Studies Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Create",
+        "operationId": "create_api_moderated_studies_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/backend__hip__moderated__Protocol"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/backend__hip__moderated__StudyView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/studies/{study_id}/sessions": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Sessions",
+        "operationId": "sessions_api_moderated_studies__study_id__sessions_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Progress"
+                  },
+                  "title": "Response Sessions Api Moderated Studies  Study Id  Sessions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/sessions/{sid}": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Inspect",
+        "operationId": "inspect_api_moderated_sessions__sid__get",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Admin Delete",
+        "operationId": "admin_delete_api_moderated_sessions__sid__delete",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/sessions/{sid}/notes": {
+      "post": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Annotate",
+        "operationId": "annotate_api_moderated_sessions__sid__notes_post",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Note"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/sessions/{sid}/outcomes": {
+      "post": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Rate",
+        "operationId": "rate_api_moderated_sessions__sid__outcomes_post",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Sid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rating"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObserverView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/logout": {
       "post": {
         "summary": "Logout",
@@ -583,7 +1139,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/StudyView"
+                    "$ref": "#/components/schemas/backend__hip__schema__StudyView"
                   },
                   "type": "array",
                   "title": "Response Studies Api Studies Get"
@@ -600,7 +1156,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Protocol"
+                "$ref": "#/components/schemas/backend__hip__schema__Protocol"
               }
             }
           },
@@ -612,7 +1168,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudyView"
+                  "$ref": "#/components/schemas/backend__hip__schema__StudyView"
                 }
               }
             }
@@ -651,7 +1207,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudyView"
+                  "$ref": "#/components/schemas/backend__hip__schema__StudyView"
                 }
               }
             }
@@ -700,7 +1256,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudyView"
+                  "$ref": "#/components/schemas/backend__hip__schema__StudyView"
                 }
               }
             }
@@ -1047,6 +1603,31 @@
   },
   "components": {
     "schemas": {
+      "Action": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "start",
+              "review",
+              "withdraw"
+            ],
+            "title": "Action"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "action"
+        ],
+        "title": "Action"
+      },
       "Attempt": {
         "properties": {
           "start_x": {
@@ -1384,45 +1965,6 @@
         ],
         "title": "EnrolledProtocol"
       },
-      "Enrollment": {
-        "properties": {
-          "study_id": {
-            "type": "string",
-            "title": "Study Id"
-          },
-          "protocol_version": {
-            "type": "string",
-            "maxLength": 240,
-            "minLength": 1,
-            "title": "Protocol Version"
-          },
-          "consent": {
-            "type": "boolean",
-            "const": true,
-            "title": "Consent"
-          },
-          "enrollment_key": {
-            "anyOf": [
-              {
-                "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Enrollment Key"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "study_id",
-          "protocol_version",
-          "consent"
-        ],
-        "title": "Enrollment"
-      },
       "EnrollmentView": {
         "properties": {
           "id": {
@@ -1547,6 +2089,43 @@
           "token"
         ],
         "title": "EnrollmentView"
+      },
+      "Entry": {
+        "properties": {
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "At"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "start",
+              "review",
+              "withdraw",
+              "note",
+              "outcome"
+            ],
+            "title": "Kind"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "at",
+          "position",
+          "kind"
+        ],
+        "title": "Entry"
       },
       "Environment": {
         "properties": {
@@ -1938,6 +2517,82 @@
         "type": "object",
         "title": "Management"
       },
+      "Note": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "text"
+        ],
+        "title": "Note"
+      },
+      "ObserverView": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "position": {
+            "type": "integer",
+            "title": "Position"
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "working",
+              "review",
+              "completed",
+              "withdrawn"
+            ],
+            "title": "Phase"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
+          },
+          "timeline": {
+            "items": {
+              "$ref": "#/components/schemas/Entry"
+            },
+            "type": "array",
+            "title": "Timeline"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "study_id",
+          "position",
+          "phase",
+          "revision",
+          "consent_at",
+          "timeline"
+        ],
+        "title": "ObserverView"
+      },
       "ParticipantView": {
         "properties": {
           "id": {
@@ -2073,165 +2728,76 @@
         ],
         "title": "Password"
       },
-      "Protocol": {
+      "Progress": {
         "properties": {
-          "title": {
+          "id": {
             "type": "string",
-            "maxLength": 240,
-            "minLength": 1,
-            "title": "Title",
-            "default": "Mouse and trackpad pointing study"
+            "title": "Id"
           },
-          "question": {
+          "study_id": {
             "type": "string",
-            "maxLength": 8000,
-            "title": "Question",
-            "default": "How does input method affect target acquisition time, accuracy, and effort?"
+            "title": "Study Id"
           },
-          "hypotheses": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Hypotheses",
-            "default": "Movement time increases with index of difficulty. Mean first-attempt latency differs between input methods."
-          },
-          "description": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Description",
-            "default": "A within-participant comparison of mouse and trackpad pointing."
-          },
-          "independent_variables": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Independent Variables",
-            "default": "Confirmed input method, target width, and target distance"
-          },
-          "dependent_variables": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Dependent Variables",
-            "default": "First-attempt movement time, first-attempt accuracy, acquisition time, and effort"
-          },
-          "control_variables": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Control Variables",
-            "default": "Same screen, seating, pointer settings, and browser throughout both blocks"
-          },
-          "inclusion_criteria": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Inclusion Criteria",
-            "default": "Adults able to consent, with a desktop or laptop and access to both study devices"
-          },
-          "exclusion_criteria": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Exclusion Criteria",
-            "default": "Document protocol deviations and interruptions. Keep raw trial records."
-          },
-          "sample_size": {
+          "position": {
             "type": "integer",
-            "maximum": 10000.0,
-            "minimum": 1.0,
-            "title": "Sample Size",
-            "default": 24
+            "title": "Position"
           },
-          "recruitment_target": {
-            "type": "integer",
-            "maximum": 10000.0,
-            "minimum": 1.0,
-            "title": "Recruitment Target",
-            "default": 24
-          },
-          "sample_justification": {
-            "type": "string",
-            "maxLength": 8000,
-            "title": "Sample Justification",
-            "default": "Feasibility pilot. Estimate participant-level variation before powering a confirmatory study."
-          },
-          "widths": {
-            "items": {
-              "type": "integer",
-              "maximum": 1200.0,
-              "minimum": 8.0
-            },
-            "type": "array",
-            "maxItems": 12,
-            "minItems": 1,
-            "title": "Widths"
-          },
-          "distances": {
-            "items": {
-              "type": "integer",
-              "maximum": 1200.0,
-              "minimum": 8.0
-            },
-            "type": "array",
-            "maxItems": 12,
-            "minItems": 1,
-            "title": "Distances"
-          },
-          "repetitions": {
-            "type": "integer",
-            "maximum": 20.0,
-            "minimum": 1.0,
-            "title": "Repetitions",
-            "default": 1
-          },
-          "practice_trials": {
-            "type": "integer",
-            "maximum": 10.0,
-            "minimum": 0.0,
-            "title": "Practice Trials",
-            "default": 2
-          },
-          "break_interval": {
-            "type": "integer",
-            "maximum": 200.0,
-            "minimum": 0.0,
-            "title": "Break Interval",
-            "default": 9
-          },
-          "protocol_version": {
-            "type": "string",
-            "maxLength": 240,
-            "minLength": 1,
-            "title": "Protocol Version",
-            "default": "1.0"
-          },
-          "retention_days": {
-            "type": "integer",
-            "maximum": 730.0,
-            "minimum": 1.0,
-            "title": "Retention Days",
-            "default": 90
-          },
-          "status": {
+          "phase": {
             "type": "string",
             "enum": [
-              "draft",
-              "active",
-              "completed"
+              "ready",
+              "working",
+              "review",
+              "completed",
+              "withdrawn"
             ],
-            "title": "Status",
-            "default": "draft"
+            "title": "Phase"
           },
-          "randomization": {
-            "type": "string",
-            "const": "counterbalanced-blocks",
-            "title": "Randomization",
-            "default": "counterbalanced-blocks"
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
           },
-          "record_trajectory": {
-            "type": "boolean",
-            "title": "Record Trajectory",
-            "default": true
+          "consent_at": {
+            "type": "integer",
+            "title": "Consent At"
           }
         },
         "additionalProperties": false,
         "type": "object",
-        "title": "Protocol"
+        "required": [
+          "id",
+          "study_id",
+          "position",
+          "phase",
+          "revision",
+          "consent_at"
+        ],
+        "title": "Progress"
+      },
+      "Rating": {
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Revision"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "independent",
+              "assisted",
+              "abandoned"
+            ],
+            "title": "Outcome"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "revision",
+          "outcome"
+        ],
+        "title": "Rating"
       },
       "Receipt": {
         "properties": {
@@ -2398,7 +2964,384 @@
         ],
         "title": "Slot"
       },
-      "StudyView": {
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "backend__hip__moderated__Enrollment": {
+        "properties": {
+          "consent": {
+            "type": "boolean",
+            "const": true,
+            "title": "Consent"
+          },
+          "receipt": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Receipt"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "consent",
+          "receipt"
+        ],
+        "title": "Enrollment"
+      },
+      "backend__hip__moderated__Protocol": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "objective": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Objective"
+          },
+          "tasks": {
+            "items": {
+              "type": "string",
+              "maxLength": 2000,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Tasks"
+          },
+          "prototype_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prototype Url"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "objective",
+          "tasks"
+        ],
+        "title": "Protocol"
+      },
+      "backend__hip__moderated__StudyView": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "objective": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Objective"
+          },
+          "tasks": {
+            "items": {
+              "type": "string",
+              "maxLength": 2000,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Tasks"
+          },
+          "prototype_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2083,
+                "minLength": 1,
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prototype Url"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "objective",
+          "tasks",
+          "id"
+        ],
+        "title": "StudyView"
+      },
+      "backend__hip__schema__Enrollment": {
+        "properties": {
+          "study_id": {
+            "type": "string",
+            "title": "Study Id"
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version"
+          },
+          "consent": {
+            "type": "boolean",
+            "const": true,
+            "title": "Consent"
+          },
+          "enrollment_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enrollment Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "study_id",
+          "protocol_version",
+          "consent"
+        ],
+        "title": "Enrollment"
+      },
+      "backend__hip__schema__Protocol": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Title",
+            "default": "Mouse and trackpad pointing study"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Question",
+            "default": "How does input method affect target acquisition time, accuracy, and effort?"
+          },
+          "hypotheses": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Hypotheses",
+            "default": "Movement time increases with index of difficulty. Mean first-attempt latency differs between input methods."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Description",
+            "default": "A within-participant comparison of mouse and trackpad pointing."
+          },
+          "independent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Independent Variables",
+            "default": "Confirmed input method, target width, and target distance"
+          },
+          "dependent_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Dependent Variables",
+            "default": "First-attempt movement time, first-attempt accuracy, acquisition time, and effort"
+          },
+          "control_variables": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Control Variables",
+            "default": "Same screen, seating, pointer settings, and browser throughout both blocks"
+          },
+          "inclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Inclusion Criteria",
+            "default": "Adults able to consent, with a desktop or laptop and access to both study devices"
+          },
+          "exclusion_criteria": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Exclusion Criteria",
+            "default": "Document protocol deviations and interruptions. Keep raw trial records."
+          },
+          "sample_size": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Sample Size",
+            "default": 24
+          },
+          "recruitment_target": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Recruitment Target",
+            "default": 24
+          },
+          "sample_justification": {
+            "type": "string",
+            "maxLength": 8000,
+            "title": "Sample Justification",
+            "default": "Feasibility pilot. Estimate participant-level variation before powering a confirmatory study."
+          },
+          "widths": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Widths"
+          },
+          "distances": {
+            "items": {
+              "type": "integer",
+              "maximum": 1200.0,
+              "minimum": 8.0
+            },
+            "type": "array",
+            "maxItems": 12,
+            "minItems": 1,
+            "title": "Distances"
+          },
+          "repetitions": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Repetitions",
+            "default": 1
+          },
+          "practice_trials": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Practice Trials",
+            "default": 2
+          },
+          "break_interval": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 0.0,
+            "title": "Break Interval",
+            "default": 9
+          },
+          "protocol_version": {
+            "type": "string",
+            "maxLength": 240,
+            "minLength": 1,
+            "title": "Protocol Version",
+            "default": "1.0"
+          },
+          "retention_days": {
+            "type": "integer",
+            "maximum": 730.0,
+            "minimum": 1.0,
+            "title": "Retention Days",
+            "default": 90
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "active",
+              "completed"
+            ],
+            "title": "Status",
+            "default": "draft"
+          },
+          "randomization": {
+            "type": "string",
+            "const": "counterbalanced-blocks",
+            "title": "Randomization",
+            "default": "counterbalanced-blocks"
+          },
+          "record_trajectory": {
+            "type": "boolean",
+            "title": "Record Trajectory",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Protocol"
+      },
+      "backend__hip__schema__StudyView": {
         "properties": {
           "title": {
             "type": "string",
@@ -2569,46 +3512,6 @@
           "created_at"
         ],
         "title": "StudyView"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
       }
     }
   }

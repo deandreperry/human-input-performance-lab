@@ -20,7 +20,8 @@ from sqlalchemy import JSON, cast, delete, func, select, type_coerce, update
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session
 
-from .db import Login, Run, Study, Trial, database, engine, now, uid
+from .db import Login, Run, Study, Trial, UsabilitySession, database, engine, now, uid
+from .moderated import routers as moderated_routes
 from .schema import (
     Attempt,
     Details,
@@ -42,6 +43,7 @@ from .trials import make_schedule, score
 def purge(db: Session):
     db.execute(delete(Run).where(Run.expires <= now()))
     db.execute(delete(Login).where(Login.expires <= now()))
+    db.execute(delete(UsabilitySession).where(UsabilitySession.expires <= now()))
     db.commit()
 
 
@@ -629,5 +631,6 @@ def dashboard(db: DB):
     }
 
 
+router.include_router(moderated_routes(admin))
 router.include_router(private)
 app.include_router(router)

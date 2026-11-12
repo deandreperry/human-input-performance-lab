@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { buildDemoReport, type Report } from "@/lib/reports";
+import { Moderated } from "./moderated";
 import { ModelPanel } from "./model-panel";
 import { TraceInspector } from "./trace-inspector";
 import { useRouter } from "next/navigation";
@@ -61,6 +62,7 @@ const nav: [string, string, LucideIcon][] = [
   ["studies", "Studies", Layers],
   ["participants", "Participants", Users],
   ["sessions", "Sessions", ClipboardList],
+  ["moderated", "Moderated usability", Users],
   ["analysis", "Analysis", ChartNoAxesCombined],
   ["reports", "Reports", FileBarChart],
 ];
@@ -806,6 +808,8 @@ export default function Workspace({ view }: { view: string }) {
                 </section>
               </div>
             </>
+          ) : view === "moderated" ? (
+            <Moderated live={live} signIn={() => showLogin(true)} />
           ) : view === "builder" ? (
             <Builder
               key={String(ready) + live}

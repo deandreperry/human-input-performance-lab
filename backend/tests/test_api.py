@@ -244,3 +244,74 @@ def test_report_history_preserves_only_study_metadata(lab):
     recent = client.get("/api/reports").json()
     assert len(recent) == 1 and recent[0]["study_id"] == study["id"]
     assert set(recent[0]) == {"title", "study_id", "generated_at"}
+
+
+def test_moderated_workflow_access_and_consent(lab):
+    client, password, _ = lab
+    root = "/api/moderated"
+    assert client.get(root + "/studies").status_code == 401
+    client.post("/api/auth/login", json={"password": password})
+    protocol = {
+        "title": "Settings",
+        "objective": "Observe preferences.",
+        "tasks": ["Find settings", "Save"],
+    }
+    assert (
+        client.post(root + "/studies", json={**protocol, "prototype_url": "javascript:test"}).status_code
+        == 422
+    )
+    study = client.post(root + "/studies", json=protocol).json()
+    base = root + "/studies/" + study["id"]
+    receipt = secrets.token_hex(32)
+    enrollment = {"consent": True, "receipt": receipt}
+    assert client.post(base + "/enroll", json={**enrollment, "consent": False}).status_code == 422
+    sid = client.post(base + "/enroll", json=enrollment).json()["id"]
+    assert sid == client.post(base + "/enroll", json=enrollment).json()["id"]
+    headers = {"Authorization": "Bearer " + receipt}
+    participant = root + "/participant/" + sid
+    monitor = root + "/sessions/" + sid
+    assert client.get(participant).status_code == 401
+    assert (
+        client.post(monitor + "/outcomes", json={"revision": 0, "outcome": "assisted"}).status_code
+        == 409
+    )
+    assert (
+        client.post(participant, headers=headers, json={"revision": 0, "action": "start"}).json()[
+            "phase"
+        ]
+        == "working"
+    )
+    assert (
+        client.post(monitor + "/notes", json={"revision": 1, "text": "Needed a hint."}).status_code
+        == 200
+    )
+    assert (
+        client.post(monitor + "/notes", json={"revision": 1, "text": "Stale edit."}).status_code == 409
+    )
+    assert "timeline" not in client.get(participant, headers=headers).json()
+    assert (
+        client.post(participant, headers=headers, json={"revision": 2, "action": "review"}).json()[
+            "phase"
+        ]
+        == "review"
+    )
+    assert (
+        client.post(monitor + "/outcomes", json={"revision": 3, "outcome": "assisted"}).json()[
+            "position"
+        ]
+        == 1
+    )
+    client.post(participant, headers=headers, json={"revision": 4, "action": "start"})
+    result = client.post(monitor + "/outcomes", json={"revision": 5, "outcome": "independent"}).json()
+    assert result["phase"] == "completed"
+    assert [e["position"] for e in result["timeline"]] == [0, 0, 0, 0, 1, 1]
+    assert (
+        client.post(participant, headers=headers, json={"revision": 6, "action": "withdraw"}).json()[
+            "phase"
+        ]
+        == "withdrawn"
+    )
+    assert client.post(monitor + "/notes", json={"revision": 7, "text": "Closed"}).status_code == 409
+    assert client.delete(participant, headers=headers).status_code == 204
+    assert client.get(base + "/sessions").json() == []
+    assert client.get(monitor).status_code == 404

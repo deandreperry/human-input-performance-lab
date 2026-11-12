@@ -12,6 +12,7 @@ export default async function Page({
       "studies",
       "participants",
       "sessions",
+      "moderated",
       "analysis",
       "reports",
       "protocol",

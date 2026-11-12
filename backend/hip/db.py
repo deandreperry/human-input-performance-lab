@@ -80,3 +80,23 @@ class Login(Base):
 def database() -> Iterator[Session]:
     with Session(engine) as db:
         yield db
+
+
+class UsabilityStudy(Base):
+    __tablename__ = "usability_studies"
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=uid)
+    protocol: Mapped[dict] = mapped_column(JSON)
+    created: Mapped[int] = mapped_column(default=now)
+
+
+class UsabilitySession(Base):
+    __tablename__ = "usability_sessions"
+    id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    study_id: Mapped[str] = mapped_column(ForeignKey("usability_studies.id"), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64))
+    consent_at: Mapped[int]
+    expires: Mapped[int] = mapped_column(index=True)
+    revision: Mapped[int] = mapped_column(default=0)
+    phase: Mapped[str] = mapped_column(String(16), default="ready")
+    position: Mapped[int] = mapped_column(default=0)
+    timeline: Mapped[list] = mapped_column(JSON, default=list)

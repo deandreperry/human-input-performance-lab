@@ -43,6 +43,16 @@ Open [the workspace](http://127.0.0.1:3000). The default dashboard has a labeled
 
 The practice instrument at [/session](http://127.0.0.1:3000/session) runs a short in-memory rehearsal. The [public case study](http://127.0.0.1:3000/case-study) explains the design, hypotheses and limitations.
 
+### Run a moderated usability study
+
+Open **Moderated usability** from the workspace sidebar and sign in. Create a study with a research objective, an ordered list of participant tasks, and a retention period. Add an optional web or prototype link for software tasks. For hardware tasks, describe the physical action in the prompt.
+
+Open the participant link in a separate browser profile on the lab computer. After consent, the participant starts each task and can request review. In the researcher window, select **Monitor** to see progress, add timestamped private notes, and score each task as completed independently, completed with help, or abandoned. The score advances the participant to the next prompt. Both views poll the local API every two seconds. Observe behavior in person or through a separately arranged screen share; HIP Lab records explicit workflow events, without recording the participant’s screen.
+
+Export the private session timeline as JSON from the monitor. It includes UTC server timestamps, consent time and task positions. These timestamps describe moderation activity and include human response delays. Participants can withdraw or delete their session under **Participation controls**. A participant receipt survives a reload in the same tab. Researchers can also delete the enrollment and its notes. The pointing-study dashboards and Fitts models use only pointing data.
+
+For an existing install, run `.venv/bin/alembic -c backend/alembic.ini upgrade head` and restart the API before opening the moderated workspace.
+
 ## Work in PyCharm
 
 Open the repository root as the project. After running the setup commands above, select the existing interpreter at `.venv/bin/python` in the project’s Python Interpreter settings. The shared run configurations in `.run/` use this interpreter and the repository working directory.
@@ -105,7 +115,7 @@ Architecture, milestones and acceptance criteria are in [the project plan](PROJE
 
 ## Release scope and remaining validation
 
-This release supports one pointing-study template. Its geometry, units, scheduling and timing definitions are software-tested. Physical-device timing calibration, usability testing with participants, assistive-technology evaluation and a real recruitment pilot remain outstanding. Automated accessibility checks cover representative flows. The timed pointing arena requires a fine pointer and sufficient space.
+This release supports a controlled pointing-study template and an ordered moderated usability protocol. Its geometry, units, scheduling and timing definitions are software-tested. Physical-device timing calibration, usability testing with participants, assistive-technology evaluation and a real recruitment pilot remain outstanding. Automated accessibility checks cover representative flows. The timed pointing arena requires a fine pointer and sufficient space.
 
 The local API is designed for a single trusted researcher on a lab computer. The database, exported files and browser profile inherit the operating system's storage protections. Retention runs at startup and hourly while the API runs. The researcher manages previously downloaded files and backups separately. PostgreSQL support uses SQLAlchemy and the optional `postgres` dependency group. The integration suite currently exercises SQLite.
 
@@ -113,6 +123,6 @@ The study-level paired contrast is the prespecified inferential test. Secondary 
 
 ### Verification record
 
-The final local run passed 17 Python tests, 6 TypeScript tests and 6 Chromium browser tests. The browser suite exercised the real participant API with an isolated SQLite database, checked researcher sign-in and protocol edits, verified synthetic exports, and ran automated accessibility checks on representative participant, desktop and mobile views. Ruff, mypy, ESLint, TypeScript and the Next.js production build passed. The deterministic fixture matched its generator. npm reported zero known advisories for the installed dependency tree.
+The final local run passed 18 Python tests, 6 TypeScript tests and 7 Chromium browser tests. The browser suite exercised the real participant API with an isolated SQLite database, checked researcher sign-in and protocol edits, verified synthetic exports, monitored a moderated session across separate researcher and participant browsers, and ran automated accessibility checks on representative participant, desktop and mobile views. Ruff, mypy, ESLint, TypeScript and the Next.js production build passed. The deterministic fixture matched its generator. npm reported zero known advisories for the installed dependency tree.
 
 The notebook and aggregate report were executed against synthetic data. The resulting three-page PDF was visually reviewed. Human timing calibration and real participant outcomes require a separate study.
