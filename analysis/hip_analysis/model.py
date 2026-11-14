@@ -14,10 +14,21 @@ from .ingest import validate
 
 
 def shannon_id(distance, width):
-    d, w = np.asarray(distance, dtype=float), np.asarray(width, dtype=float)
-    if np.any(~np.isfinite(d) | ~np.isfinite(w) | (d <= 0) | (w <= 0)):
+    distances = np.asarray(distance, dtype=float)
+    widths = np.asarray(width, dtype=float)
+    if np.any(~np.isfinite(distances) | ~np.isfinite(widths) | (distances <= 0) | (widths <= 0)):
         raise ValueError("Width and distance must be finite and positive.")
-    return np.log2(1 + d / w)
+    with np.errstate(over="ignore"):
+        ratio = distances / widths
+    # Splitting by ratio preserves tiny increments and avoids log2(infinity)
+    # when two finite dimensions have a quotient beyond float64 range.
+    with np.errstate(divide="ignore"):
+        difficulty_bits = np.where(
+            ratio < 1,
+            np.log1p(ratio) / np.log(2.0),
+            np.log2(1 + ratio),
+        )
+    return np.where(np.isinf(ratio), np.log2(distances) - np.log2(widths), difficulty_bits)[()]
 
 
 def conditions(frame: pd.DataFrame) -> list[dict]:

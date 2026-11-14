@@ -14,6 +14,14 @@ def test_difficulty_and_invalid_dimensions():
             shannon_id(value, 30)
 
 
+def test_difficulty_at_extreme_finite_ratios():
+    distances = np.array([1e-20, 120.0, 1e308])
+    widths = np.array([1.0, 40.0, 1e-308])
+    difficulty = shannon_id(distances, widths)
+    expected = [1e-20 / np.log(2.0), 2.0, 616 * np.log2(10.0)]
+    np.testing.assert_allclose(difficulty, expected, rtol=1e-14, atol=0)
+
+
 def test_reproducible_and_raw_records_immutable():
     source = synthetic_trials(4)
     before = deepcopy(source)
