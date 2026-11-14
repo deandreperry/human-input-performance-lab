@@ -53,6 +53,12 @@ Export the private session timeline as JSON from the monitor. It includes UTC se
 
 For an existing install, run `.venv/bin/alembic -c backend/alembic.ini upgrade head` and restart the API before opening the moderated workspace.
 
+### Research metrics and study results
+
+Open **Metrics calculator** in the workspace sidebar to calculate task rates, completed-task times, errors, conversion, satisfaction, SUS, descriptive statistics or sample-size estimates. Enter scored participants as the denominator for task success. Compare two groups using the same metric and units. **Copy summary**, **Export CSV**, and **Print / save PDF** include the current results. CSV includes chart data and the PDF includes chart visuals. In live mode, a manual worksheet can be saved to a pointing or moderated study and reopened later. Saved worksheets are independent manual inputs and can be deleted from the worksheet list.
+
+Under **Moderated usability**, **Study results** shows task counts and rates across eligible sessions. Select a task to inspect private observations grouped by outcome. Started tasks awaiting a score remain visible. Export the aggregate CSV with optional researcher interpretation and recommendation. The export recalculates from current sessions and omits private observer notes.
+
 ## Work in PyCharm
 
 Open the repository root as the project. After running the setup commands above, select the existing interpreter at `.venv/bin/python` in the project’s Python Interpreter settings. The shared run configurations in `.run/` use this interpreter and the repository working directory.
@@ -123,6 +129,6 @@ The study-level paired contrast is the prespecified inferential test. Secondary 
 
 ### Verification record
 
-The final local run passed 18 Python tests, 6 TypeScript tests and 7 Chromium browser tests. The browser suite exercised the real participant API with an isolated SQLite database, checked researcher sign-in and protocol edits, verified synthetic exports, monitored a moderated session across separate researcher and participant browsers, and ran automated accessibility checks on representative participant, desktop and mobile views. Ruff, mypy, ESLint, TypeScript and the Next.js production build passed. The deterministic fixture matched its generator. npm reported zero known advisories for the installed dependency tree.
+The final local run passed 20 Python tests, 13 TypeScript tests and 8 Chromium browser tests. The browser suite exercised the real participant API with an isolated SQLite database, checked researcher sign-in and protocol edits, verified calculator comparisons and CSV/PDF exports, verified synthetic exports, monitored a moderated session across separate researcher and participant browsers, and ran automated accessibility checks on representative participant, desktop and mobile views. Ruff, mypy, ESLint, TypeScript and the Next.js production build passed. The deterministic fixture matched its generator. npm reported zero known advisories for the installed dependency tree.
 
 The notebook and aggregate report were executed against synthetic data. The resulting three-page PDF was visually reviewed. Human timing calibration and real participant outcomes require a separate study.

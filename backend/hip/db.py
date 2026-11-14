@@ -100,3 +100,16 @@ class UsabilitySession(Base):
     phase: Mapped[str] = mapped_column(String(16), default="ready")
     position: Mapped[int] = mapped_column(default=0)
     timeline: Mapped[list] = mapped_column(JSON, default=list)
+
+
+class SavedCalculation(Base):
+    __tablename__ = "saved_calculations"
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=uid)
+    pointing_id: Mapped[str | None] = mapped_column(
+        ForeignKey("studies.id", ondelete="CASCADE"), index=True
+    )
+    moderated_id: Mapped[str | None] = mapped_column(
+        ForeignKey("usability_studies.id", ondelete="CASCADE"), index=True
+    )
+    payload: Mapped[dict] = mapped_column(JSON)
+    created: Mapped[int] = mapped_column(default=now)

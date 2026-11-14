@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 
 from .db import UsabilitySession, UsabilityStudy, database, now
 from .schema import Model
+from .study_results import summarize
 
 DB = Annotated[Session, Depends(database)]
 Text = Annotated[str, Field(min_length=1, max_length=2000)]
@@ -179,6 +180,20 @@ def routers(admin):
                 .order_by(UsabilitySession.consent_at.desc())
             )
         )
+
+    @private.get("/studies/{study_id}/results")
+    def results(study_id: str, db: DB):
+        protocol = study(db, study_id).protocol
+        runs = list(
+            db.scalars(
+                select(UsabilitySession).where(
+                    UsabilitySession.study_id == study_id,
+                    UsabilitySession.expires > now(),
+                    UsabilitySession.phase != "withdrawn",
+                )
+            )
+        )
+        return {"sessions": len(runs), "tasks": summarize(protocol["tasks"], runs)}
 
     @public.get("/participant/{sid}", response_model=Progress)
     def progress(item: Member):

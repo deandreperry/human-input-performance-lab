@@ -708,7 +708,7 @@ p {
   font-size: 11px;
 }
 .table-scroll {
-  position:relative;
+  position: relative;
   overflow-x: auto;
 }
 table {
@@ -868,8 +868,15 @@ footer .tiny-light {
   width: 5px;
   height: 5px;
 }
-.mobile { display:none }
-.skip:not(:focus){position:fixed;transform:translateY(-150%);top:0;left:0}
+.mobile {
+  display: none;
+}
+.skip:not(:focus) {
+  position: fixed;
+  transform: translateY(-150%);
+  top: 0;
+  left: 0;
+}
 .skip:focus {
   position: fixed;
   top: 0;
@@ -954,12 +961,12 @@ footer .tiny-light {
 }
 @media (max-width: 720px) {
   .sidebar {
-    visibility:hidden;
+    visibility: hidden;
     transform: translateX(-105%);
     width: 218px;
   }
   .sidebar.open {
-    visibility:visible;
+    visibility: visible;
     transform: none;
   }
   .main-col {
@@ -1120,4 +1127,116 @@ details select {
 }
 .report-bar meter {
   flex: 1;
+}
+.calc-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.4fr);
+  gap: 16px;
+  align-items: start;
+}
+.calc-controls > label,
+.calc-fields label,
+.calc-report > label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 14px 0;
+  font-weight: 600;
+  font-size: 13px;
+}
+.calc-controls > label.check {
+  flex-direction: row;
+  align-items: center;
+}
+.calc-fields {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+}
+.calc-fields legend,
+.calc-figure figcaption {
+  font: 600 11px var(--mono);
+  color: var(--muted);
+}
+.calc-fields small {
+  font-weight: 400;
+  color: var(--muted);
+}
+.calc-method p,
+.calc-output p,
+.calc-report p {
+  margin-top: 8px;
+}
+.calc-figure {
+  margin: 16px 0;
+}
+.calc-bar {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) 2fr minmax(30px, auto);
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  margin: 7px 0;
+}
+.calc-bar svg {
+  width: 100%;
+  height: 10px;
+  background: var(--soft);
+  border-radius: 3px;
+}
+.calc-report pre,
+.calc-print pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.calc-print {
+  display: none;
+}
+.calc-report > label {
+  max-width: 460px;
+}
+.research-calculator .panel {
+  overflow-wrap: anywhere;
+}
+.calc-layout input,
+.calc-layout select,
+.calc-layout textarea {
+  min-width: 0;
+  width: 100%;
+}
+.calc-layout input[type="checkbox"] {
+  width: auto;
+}
+@media (max-width: 860px) {
+  .calc-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  body:has(.research-calculator) .workspace > .main-col {
+    display: block !important;
+    width: 100%;
+    margin: 0;
+  }
+  body:has(.research-calculator) .topbar,
+  body:has(.research-calculator) footer,
+  .research-calculator > :not(.calc-print) {
+    display: none !important;
+  }
+  .calc-print {
+    display: block;
+    color: #18283f;
+    background: white;
+  }
+  .calc-print .panel {
+    break-inside: avoid;
+    border: 0;
+    box-shadow: none;
+  }
+  .calc-print .calc-bar svg {
+    print-color-adjust: exact;
+  }
+  .calc-print details {
+    display: none;
+  }
 }

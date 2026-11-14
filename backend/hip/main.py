@@ -20,6 +20,7 @@ from sqlalchemy import JSON, cast, delete, func, select, type_coerce, update
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Session
 
+from .calculations import routes as calculation_routes
 from .db import Login, Run, Study, Trial, UsabilitySession, database, engine, now, uid
 from .moderated import routers as moderated_routes
 from .schema import (
@@ -631,6 +632,7 @@ def dashboard(db: DB):
     }
 
 
+router.include_router(calculation_routes(admin))
 router.include_router(moderated_routes(admin))
 router.include_router(private)
 app.include_router(router)

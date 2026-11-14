@@ -540,6 +540,177 @@
         }
       }
     },
+    "/api/calculations/{kind}/{study_id}": {
+      "get": {
+        "tags": [
+          "research metrics"
+        ],
+        "summary": "Saved",
+        "operationId": "saved_api_calculations__kind___study_id__get",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "pointing",
+                "moderated"
+              ],
+              "type": "string",
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "research metrics"
+        ],
+        "summary": "Save",
+        "operationId": "save_api_calculations__kind___study_id__post",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "pointing",
+                "moderated"
+              ],
+              "type": "string",
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Worksheet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/calculations/{kind}/{study_id}/{key}": {
+      "delete": {
+        "tags": [
+          "research metrics"
+        ],
+        "summary": "Remove",
+        "operationId": "remove_api_calculations__kind___study_id___key__delete",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "pointing",
+                "moderated"
+              ],
+              "type": "string",
+              "title": "Kind"
+            }
+          },
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/moderated/studies/{study_id}": {
       "get": {
         "tags": [
@@ -901,6 +1072,46 @@
                   },
                   "title": "Response Sessions Api Moderated Studies  Study Id  Sessions Get"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moderated/studies/{study_id}/results": {
+      "get": {
+        "tags": [
+          "moderated usability"
+        ],
+        "summary": "Results",
+        "operationId": "results_api_moderated_studies__study_id__results_get",
+        "parameters": [
+          {
+            "name": "study_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Study Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -2316,6 +2527,33 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "Inputs": {
+        "properties": {
+          "first": {
+            "type": "string",
+            "maxLength": 20000,
+            "title": "First"
+          },
+          "second": {
+            "type": "string",
+            "maxLength": 20000,
+            "title": "Second"
+          },
+          "third": {
+            "type": "string",
+            "maxLength": 20000,
+            "title": "Third"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "first",
+          "second",
+          "third"
+        ],
+        "title": "Inputs"
+      },
       "ManagedRun": {
         "properties": {
           "id": {
@@ -3003,6 +3241,66 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "Worksheet": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "success",
+              "completion",
+              "conversion",
+              "time",
+              "stats",
+              "errors",
+              "ratings",
+              "sus",
+              "planning"
+            ],
+            "title": "Method"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "primary": {
+            "$ref": "#/components/schemas/Inputs"
+          },
+          "other_label": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Other Label"
+          },
+          "other": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Inputs"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "method",
+          "label",
+          "primary",
+          "other_label"
+        ],
+        "title": "Worksheet"
       },
       "backend__hip__moderated__Enrollment": {
         "properties": {

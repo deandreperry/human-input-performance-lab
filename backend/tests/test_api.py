@@ -315,3 +315,60 @@ def test_moderated_workflow_access_and_consent(lab):
     assert client.delete(participant, headers=headers).status_code == 204
     assert client.get(base + "/sessions").json() == []
     assert client.get(monitor).status_code == 404
+
+
+def test_moderated_results_and_saved_worksheets(lab):
+    client, password, _ = lab
+    root = "/api/moderated"
+    assert client.get(root + "/studies/x/results").status_code == 401
+    assert client.get("/api/calculations/moderated/x").status_code == 401
+    client.post("/api/auth/login", json={"password": password})
+    study = client.post(
+        root + "/studies",
+        json={"title": "Pilot", "objective": "Observe task", "tasks": ["Find", "Save"]},
+    ).json()
+    base = root + "/studies/" + study["id"]
+    access = []
+    for outcome in ("independent", "assisted", "abandoned", None):
+        token = secrets.token_hex(32)
+        sid = client.post(base + "/enroll", json={"consent": True, "receipt": token}).json()["id"]
+        path = root + "/participant/" + sid
+        headers = {"Authorization": "Bearer " + token}
+        client.post(path, headers=headers, json={"action": "start", "revision": 0})
+        client.post(root + "/sessions/" + sid + "/notes", json={"text": "Observed dial", "revision": 1})
+        if outcome:
+            client.post(
+                root + "/sessions/" + sid + "/outcomes", json={"revision": 2, "outcome": outcome}
+            )
+        access.append((path, headers))
+    url = base + "/results"
+    row = client.get(url).json()["tasks"][0]
+    assert [row[k] for k in ("started", "independent", "assisted", "abandoned", "unscored")] == [
+        4,
+        1,
+        1,
+        1,
+        1,
+    ]
+    assert len(row["notes"]) == 4 and row["notes"][0]["text"] == "Observed dial"
+    path, headers = access[1]
+    client.post(path, headers=headers, json={"action": "withdraw", "revision": 3})
+    path, headers = access[2]
+    client.delete(path, headers=headers)
+    result = client.get(url).json()
+    assert result["sessions"] == 2 and result["tasks"][0]["assisted"] == 0
+    assert len(result["tasks"][0]["notes"]) == 2 and result["tasks"][1]["started"] == 0
+    worksheets = "/api/calculations/moderated/" + study["id"]
+    payload = {
+        "title": "Round A",
+        "method": "success",
+        "label": "Test",
+        "primary": {"first": "8", "second": "10", "third": ""},
+        "other_label": "Comparison",
+        "other": None,
+    }
+    key = client.post(worksheets, json=payload).json()["id"]
+    assert client.get(worksheets).json()[0]["primary"] == payload["primary"]
+    assert client.get("/api/calculations/pointing/" + study["id"]).status_code == 404
+    assert client.delete(worksheets + "/" + key).status_code == 204
+    assert client.get(worksheets).json() == []

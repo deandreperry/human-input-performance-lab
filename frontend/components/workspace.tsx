@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
 import { buildDemoReport, type Report } from "@/lib/reports";
+import { ResearchCalculator } from "./research-calculator";
 import { Moderated } from "./moderated";
 import { ModelPanel } from "./model-panel";
 import { TraceInspector } from "./trace-inspector";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import {
+  Calculator,
   Activity,
   ArrowDownToLine,
   ArrowRight,
@@ -64,6 +66,7 @@ const nav: [string, string, LucideIcon][] = [
   ["sessions", "Sessions", ClipboardList],
   ["moderated", "Moderated usability", Users],
   ["analysis", "Analysis", ChartNoAxesCombined],
+  ["calculator", "Metrics calculator", Calculator],
   ["reports", "Reports", FileBarChart],
 ];
 const path = (s: string) => (s === "overview" ? "/" : "/" + s);
@@ -808,6 +811,8 @@ export default function Workspace({ view }: { view: string }) {
                 </section>
               </div>
             </>
+          ) : view === "calculator" ? (
+            <ResearchCalculator live={live} studies={studies} />
           ) : view === "moderated" ? (
             <Moderated live={live} signIn={() => showLogin(true)} />
           ) : view === "builder" ? (

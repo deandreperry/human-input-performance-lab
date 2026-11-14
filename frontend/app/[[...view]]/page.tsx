@@ -13,6 +13,7 @@ export default async function Page({
       "participants",
       "sessions",
       "moderated",
+      "calculator",
       "analysis",
       "reports",
       "protocol",

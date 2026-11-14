@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { ModeratedResults } from "./moderated-results";
 import { Button } from "./ui/button";
 import {
   request,
@@ -153,6 +154,7 @@ export function Moderated({
                   </p>
                 )}
               </section>
+              <ModeratedResults key={study.id} study={study} />
               {sessionId && (
                 <Monitor
                   key={sessionId}
